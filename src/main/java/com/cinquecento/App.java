@@ -1,13 +1,13 @@
 package com.cinquecento;
 
-/**
- * Hello world!
- *
- */
-public class App 
+
+import com.cinquecento.config.LiquibaseInit;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        LiquibaseInit.init();
+
     }
 }

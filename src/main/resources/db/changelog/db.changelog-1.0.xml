@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1-create-swot" author="a.vlaskin">
+        <createTable tableName="swot">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-swot-dir" author="a.vlaskin">
+        <createTable tableName="swot_dir">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3-create-param" author="a.vlaskin">
+        <createTable tableName="param">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="kc" type="DOUBLE"/>
+            <column name="kf" type="DOUBLE"/>
+            <column name="kp" type="DOUBLE"/>
+            <column name="swot_dir_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="param"
+                baseColumnNames="swot_dir_id"
+                referencedTableName="swot_dir"
+                referencedColumnNames="id"
+                constraintName="fk_param_swot_dir"/>
+    </changeSet>
+
+    <changeSet id="4-create-analyze-obj" author="a.vlaskin">
+        <createTable tableName="analyze_obj">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="swot_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="analyze_obj"
+                baseColumnNames="swot_id"
+                referencedTableName="swot"
+                referencedColumnNames="id"
+                constraintName="fk_analyze_obj_swot"/>
+    </changeSet>
+
+    <changeSet id="5-create-prm-value" author="a.vlaskin">
+        <createTable tableName="prm_value">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="txt_val_c" type="TEXT"/>
+            <column name="zc" type="DOUBLE"/>
+            <column name="pc" type="DOUBLE"/>
+            <column name="vc" type="DOUBLE"/>
+            <column name="txt_val_f" type="TEXT"/>
+            <column name="zf" type="DOUBLE"/>
+            <column name="pf" type="DOUBLE"/>
+            <column name="vf" type="DOUBLE"/>
+            <column name="txt_val_p" type="TEXT"/>
+            <column name="zp" type="DOUBLE"/>
+            <column name="pp" type="DOUBLE"/>
+            <column name="vp" type="DOUBLE"/>
+            <column name="analyze_obj_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="prm_value"
+                baseColumnNames="analyze_obj_id"
+                referencedTableName="analyze_obj"
+                referencedColumnNames="id"
+                constraintName="fk_prm_value_analyze_obj"/>
+    </changeSet>
+</databaseChangeLog>
